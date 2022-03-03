@@ -2,18 +2,11 @@
 
 UST is a bioinformatics tool for constructing a spectrum-preserving string set (SPSS) representation from sets of k-mers.
 
-__Note__: This software has been subsumed by [ESSCompress](https://github.com/medvedevgroup/ESSCompress/). To use UST, download ESSCompress and follow the UST instructions in the [README](https://github.com/medvedevgroup/ESSCompress/blob/master/README.md#Running-in-UST-mode).
-
-## Requirements
-
-GCC >= 4.8 or a C++11 capable compiler
-
-
 ## Quick start
 
 To install, compile from source:
 
-    git clone https://github.com/medvedevgroup/UST
+    git clone https://github.com/jermp/UST
     cd UST
     make
 
@@ -29,9 +22,12 @@ The important parameters are:
 
 *  `k [int]` : The k-mer size that was used to generate the input, i.e. the length of the nodes of the node-centric de Bruijn graph.
 *  `i [input-file]` : Unitigs file produced by [BCALM2 in FASTA format](https://github.com/GATB/bcalm#output).
-*  `a [0 or 1]` : Default is 0. A value of 1 tells UST to preserve abundance. Use this option when the input file was generated with the  `-all-abundance counts` option of BCALM2.
+*  `a [0 or 1]` : Default is 0. A value of 1 tells UST to preserve abundance. Use this option when the input file was generated with the  `-all-abundance-counts` option of BCALM2.
 
-The output is a FASTA file with extenstion "ust.fa" in the working folder, which is the SPSS representaiton of the input. If the program is run with the option -a 1, an additional count file with extension "ust.counts" will also be generated.
+The output is a FASTA file with extenstion "ust.fa" in the working folder, which is the SPSS representaiton of the input.
+
+If the program is run with the option `-a 1`, then the header line of each sequence will also contain the abundance counts as
+in the provided BCALM input file.
 
 
 ## Detailed Usage
@@ -40,10 +36,7 @@ In order to build a SPSS representation for your k-mer set, you must first run [
 
 If you would like to store the data on disk in compressed form (like UST-Compress in our paper), you can then install and run [MFCompress](http://bioinformatics.ua.pt/software/mfcompress/) on the output of UST as follows: `MFCompressC mykmers.ust.fa`
 
-If you would like to build a membership data structure based on UST, then
-- Install [bwtdisk](http://people.unipmn.it/manzini/bwtdisk/) and [dbgfm](https://github.com/jts/dbgfm).
-- Change the two variables "DBGFM_DIRECTORY" and "BWTDISK_DIRECTORY" in the script `ust-fm.sh` to point to the locations where dbgfm and bwtdisk are installed. Alternatively, you can add the path to both tools in your environment PATH variable and then modify the script accordingly.
-- Run `ust-fm.sh` as follows: `ust-fm.sh mykmers.ust.fa`
+If you would like to build a membership data structure based on UST, then see the [SSHash](https://github.com/jermp/sshash) repository.
 
 ## Citation
 
